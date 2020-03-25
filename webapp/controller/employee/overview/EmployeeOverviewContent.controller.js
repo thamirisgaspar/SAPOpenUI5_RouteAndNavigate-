@@ -29,36 +29,56 @@ sap.ui.define([
 			this._oRouterArgs = null;
 
 			this._initViewSettingsDialog();
+
 			// make the search bookmarkable
 			oRouter.getRoute("employeeOverview").attachMatched(this._onRouteMatched, this);
+
 		},
-		_onRouteMatched: function (oEvent) {
+
+		_onRouteMatched : function (oEvent) {
 			// save the current query state
 			this._oRouterArgs = oEvent.getParameter("arguments");
 			this._oRouterArgs["?query"] = this._oRouterArgs["?query"] || {};
+			var oQueryParameter = this._oRouterArgs["?query"];
 
 			// search/filter via URL hash
-			this._applySearchFilter(this._oRouterArgs["?query"].search);
+			this._applySearchFilter(oQueryParameter.search);
 
 			// sorting via URL hash
 			this._applySorter(oQueryParameter.sortField, oQueryParameter.sortDescending);
+
+			// show dialog via url hash
+			if (oQueryParameter.showDialog) {
+				this._oVSD.open();
+			}
 		},
-		onSortButtonPressed : function () {
-			this._oVSD.open();
+
+		onSortButtonPressed : function (oEvent) {
+			var oRouter = this.getRouter();
+			this._oRouterArgs["?query"].showDialog = 1;
+			oRouter.navTo("employeeOverview",this._oRouterArgs);
 		},
+
 		onSearchEmployeesTable : function (oEvent) {
 			var oRouter = this.getRouter();
 			// update the hash with the current search term
 			this._oRouterArgs["?query"].search = oEvent.getSource().getValue();
-			oRouter.navTo("employeeOverview", this._oRouterArgs, true /*no history*/);
+			oRouter.navTo("employeeOverview",this._oRouterArgs, true /*no history*/);
 		},
+
 		_initViewSettingsDialog : function () {
+			var oRouter = this.getRouter();
 			this._oVSD = new ViewSettingsDialog("vsd", {
 				confirm: function (oEvent) {
 					var oSortItem = oEvent.getParameter("sortItem");
 					this._oRouterArgs["?query"].sortField = oSortItem.getKey();
 					this._oRouterArgs["?query"].sortDescending = oEvent.getParameter("sortDescending");
-					oRouter.navTo("employeeOverview", this._oRouterArgs, true /*without history*/);
+					delete this._oRouterArgs["?query"].showDialog;
+					oRouter.navTo("employeeOverview",this._oRouterArgs, true /*without history*/);
+				}.bind(this),
+				cancel : function (oEvent){
+					delete this._oRouterArgs["?query"].showDialog;
+					oRouter.navTo("employeeOverview",this._oRouterArgs, true /*without history*/);
 				}.bind(this)
 			});
 
