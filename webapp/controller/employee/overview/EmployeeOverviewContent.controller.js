@@ -117,7 +117,7 @@ sap.ui.define([
 			if (sSearchQuery && sSearchQuery.length > 0) {
 				aFilters.push(new Filter("FirstName", FilterOperator.Contains, sSearchQuery));
 				aFilters.push(new Filter("LastName", FilterOperator.Contains, sSearchQuery));
-				oFilter = new Filter({ filters: aFilters, and: false });  // OR filter
+				oFilter = new Filter({ filters: aFilters, and: false });  //OR filter
 			} else {
 				oFilter = null;
 			}
@@ -172,14 +172,15 @@ sap.ui.define([
 			this._oVSD.setSortDescending(bSortDescending);
 		},
 
-		onItemPressed: function (oEvent) {
-			var oItem, oCtx, oRouter;
+		onItemPressed : function (oEvent) {
+			var oItem, oCtx;
 			oItem = oEvent.getParameter("listItem");
 			oCtx = oItem.getBindingContext();
+
 			this.getRouter().navTo("employeeResume",{
 				employeeId : oCtx.getProperty("EmployeeID"),
-				"?query": {
-					tab: "Info"
+				"?query" : {
+					tab : "Info"
 				}
 			});
 		}

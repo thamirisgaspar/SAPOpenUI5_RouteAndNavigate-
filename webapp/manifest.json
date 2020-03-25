@@ -75,9 +75,9 @@
 				"name": "employeeList",
 				"target": "employees"
 			}, {
-				"pattern": "employees/overview:?query:",
+				"pattern": "employee/overview:?query:",
 				"name": "employeeOverview",
-				"target": ["employeeOverviewTop", "employeeOverviewContent"]
+				"target": ["EmployeeOverviewTop", "EmployeeOverviewContent"]
 			}, {
 				"pattern": "employees/{employeeId}",
 				"name": "employee",
@@ -116,38 +116,38 @@
 					"transition": "flip"
 				},
 				"resumeTabHobbies": {
-					"viewId": "resumeHobbies",
 					"parent": "employeeResume",
+					"viewId": "resumeHobbies",
 					"viewPath": "sap.ui.demo.nav.view.employee",
 					"viewName": "ResumeHobbies",
 					"controlId": "hobbiesTab",
 					"controlAggregation": "content"
 				},
 				"resumeTabNotes": {
-					"viewId": "resumeNotes",
 					"parent": "employeeResume",
+					"viewId": "resumeNotes",
 					"viewPath": "sap.ui.demo.nav.view.employee",
 					"viewName": "ResumeNotes",
 					"controlId": "notesTab",
 					"controlAggregation": "content"
 				},
-				"employeeOverview": {
+				"EmployeeOverview": {
 					"viewId": "employeeOverview",
 					"viewPath": "sap.ui.demo.nav.view.employee.overview",
 					"viewName": "EmployeeOverview",
 					"viewLevel" : 2
 				},
-				"employeeOverviewTop": {
+				"EmployeeOverviewTop": {
+					"parent": "EmployeeOverview",
 					"viewId": "employeeOverviewTop",
-					"parent": "employeeOverview",
 					"viewPath": "sap.ui.demo.nav.view.employee.overview",
 					"viewName": "EmployeeOverviewTop",
 					"controlId": "EmployeeOverviewParent",
 					"controlAggregation": "content"
 				},
-				"employeeOverviewContent": {
+				"EmployeeOverviewContent": {
+					"parent": "EmployeeOverview",
 					"viewId": "employeeOverviewContent",
-					"parent": "employeeOverview",
 					"viewPath": "sap.ui.demo.nav.view.employee.overview",
 					"viewName": "EmployeeOverviewContent",
 					"controlId": "EmployeeOverviewParent",
